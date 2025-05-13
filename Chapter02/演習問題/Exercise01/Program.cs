@@ -9,10 +9,28 @@
                 new Song("Honesty", "Billy Joel", 231),
                 new Song("I Will Always Love You", "Whitney Houston", 273),
             };
+            printSong(songs);
         }
         //2.1.4
         private static void printSong(Song[] songs) {
+#if false
+            foreach(var song in songs) {
+                var minutes = song.Length / 60;
+                var seconds = song.Length % 60;
+                Console.WriteLine($"{song.Title},{song.ArtistName}{minutes}{seconds:00}")
+            }
+#endif
+            //TimeSpan構造体を使った場合
+            foreach (var song in songs) {
+                var timespan = TimeSpan.FromSeconds(songs.Length);
+                Console.WriteLine($"{song.Title},{song.ArtistName}{timespan.Minutes}:{timespan.Seconds}");
+            }
 
+            foreach (var song in songs) {
+                Console.WriteLine(@"{0},{1} {2:m\ ss}",
+                    song.Title, song.ArtistName, TimeSpan.FromSeconds(songs.Length));
+            }
+            Console.WriteLine();
         }
     }
 }
