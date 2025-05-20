@@ -30,13 +30,14 @@ namespace Exercise02 {
                 var name = Console.ReadLine();
                 if (string.IsNullOrEmpty(name))
                     break;
-                    int index = names.FindIndex(s => s.Equals(name));
+                int index = names.FindIndex(s => s.Equals(name));
                 Console.WriteLine(index);
             } while (true);
         }
 
         private static void Exercise2_2(List<string> names) {
-
+            var count = names.Count(s => s.Contains('o'));
+            Console.WriteLine(count);
         }
 
         private static void Exercise2_3(List<string> names) {
