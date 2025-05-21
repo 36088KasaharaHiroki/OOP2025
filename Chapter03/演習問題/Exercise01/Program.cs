@@ -28,21 +28,26 @@ namespace Exercise01 {
                 Console.WriteLine("存在しています");
             } else {
                 Console.WriteLine("存在しません");
-            }           
+            }
         }
         private static void Exercise2(List<int> numbers) {
-            numbers.ForEach(n => Console.WriteLine(n/2.0));
+            numbers.ForEach(n => Console.WriteLine(n / 2.0));
+
+            //foreach(var n in numbers) {
+            //    Console.WriteLine(n / 2.0);
+            //}
         }
 
         private static void Exercise3(List<int> numbers) {
-            var query = numbers.Where(n => n >= 50);
-            foreach(int n in query) {
-                Console.WriteLine(n);
-            }
+            numbers.Where(n => n >= 50).ToList().ForEach(n => Console.WriteLine(n));
+            
+            //foreach (var num in numbers.Where(n => n >= 50)){
+            //    Console.WriteLine(num);
+            //}
         }
 
         private static void Exercise4(List<int> numbers) {
-            
+            numbers.Select(n => n * 2).ToList().ForEach(Console.WriteLine);
         }
     }
 }
