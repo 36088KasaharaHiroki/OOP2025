@@ -23,7 +23,7 @@ namespace Exercise01 {
         }
 
         private static void Exercise1(List<int> numbers) {
-            var exists = numbers.Exists(s => s % 8 == 0 || s % 9 == 0);
+            var exists = numbers.Exists(n => n % 8 == 0 || n % 9 == 0);
             if (exists) {
                 Console.WriteLine("存在しています");
             } else {
@@ -31,11 +31,14 @@ namespace Exercise01 {
             }           
         }
         private static void Exercise2(List<int> numbers) {
-            numbers.ForEach(s => Console.WriteLine(s/2.0));
+            numbers.ForEach(n => Console.WriteLine(n/2.0));
         }
 
         private static void Exercise3(List<int> numbers) {
-            
+            var query = numbers.Where(n => n >= 50);
+            foreach(int n in query) {
+                Console.WriteLine(n);
+            }
         }
 
         private static void Exercise4(List<int> numbers) {
