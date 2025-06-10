@@ -8,14 +8,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Exercise01 {
     //5.1.1
-    public class YearMonth {
-        public int Year { get; init; }
-        public int Month { get; init; }
+    public record YearMonth(int Year, int Month) {
 
-        public YearMonth(int year, int month) {
-            Year = year;
-            Month = month;
-        }
         //5.1.2
         public bool Is21Century => Year >= 2001 && Year <= 2100;
 
@@ -29,6 +23,6 @@ namespace Exercise01 {
         }
 
         //5.1.4
-        public override string ToString() => $"{Year}年{Month}月";        
+        public override string ToString() => $"{Year}年{Month}月";
     }
 }
