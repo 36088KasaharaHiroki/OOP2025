@@ -28,13 +28,18 @@ namespace Exercise02 {
             }
         }
         //5.2.3
-        private static YearMonth? FindFirst21C(YearMonth[] ymCollection) {            
-                return null;            
+        private static YearMonth? FindFirst21C(YearMonth[] ymCollection) {
+            foreach (var ym in ymCollection) {
+                if (ym.Is21Century) {
+                    return ym;
+                }
+            }
+            return null;
         }
 
         //5.2.4
         private static void Exercise4(YearMonth[] ymCollection) {
-
+            
         }
         //5.2.5
         private static void Exercise5(YearMonth[] ymCollection) {
