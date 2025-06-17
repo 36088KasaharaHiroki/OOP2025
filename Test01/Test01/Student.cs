@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Test01 {
     public class Student {
-        public string Name { get; set; } = string.Empty;
-        public string Subject { get; set; } = string.Empty;
-        public int Score { get; set; }
+        public required string Name { get; init; }
+        public required string Subject { get; init; }
+        public required int Score { get; init; }
     }
 }

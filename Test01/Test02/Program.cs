@@ -1,5 +1,8 @@
 ﻿
 
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
 namespace Test02 {
     internal class Program {
         static void Main(string[] args) {
@@ -64,7 +67,6 @@ namespace Test02 {
         //　　　　出力結果【618】
         private static void Exercise01(int[] numbers) => Console.WriteLine(numbers.Sum());
 
-
         //問題２　偶数の最大値を表示（式形式で記述せよ）
         //　　　　出力結果【94】
         private static void Exercise02(int[] numbers) => Console.WriteLine(numbers.Where(n => n % 2 == 0).Max());
@@ -73,7 +75,7 @@ namespace Test02 {
         //問題３　昇順に並べて表示（遅延実行とする）
         //　　　　出力結果【12 14 17 20 31 35 40 48 53 76 87 91 94】
         private static void Exercise03(int[] numbers) {
-            
+
 
         }
 
