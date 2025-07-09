@@ -2,7 +2,7 @@
 
 namespace Test01 {
     public class ScoreCounter {
-        private IEnumerable<Student> _score;
+        private readonly IEnumerable<Student> _score;
 
         // コンストラクタ
         public ScoreCounter(string filePath) {
@@ -10,7 +10,7 @@ namespace Test01 {
         }
 
         //メソッドの概要： 
-        private static IEnumerable<Student> ReadScore(string filePath) {
+        private static IEnumerable<Student> ReadScore(String filePath) {
             var scores = new List<Student>();
             var lines = File.ReadAllLines(filePath);
             foreach (var line in lines) {
@@ -27,15 +27,16 @@ namespace Test01 {
         }
 
         //メソッドの概要： 
-        public IDictionary<string, int> GetPerStudentScore() {
+        public IDictionary<String, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
             foreach (Student score in _score) {
-                if (dict.ContainsKey(score.Name))
-                    dict[score.Subject] += score.Score;
+                if (dict.ContainsKey(score.Subject))
+                    dict[score.Name] += score.Score;
                 else
-                    dict[score.Subject] = score.Score;
+                    dict[score.Name] = score.Score;
             }
             return dict;
         }
+
     }
 }

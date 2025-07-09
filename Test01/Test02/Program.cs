@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -95,15 +96,15 @@ namespace Test02 {
         //問題５　Countメソッドを使い、小文字の'n'が含まれている都市名がいくつあるかカウントして結果を表示
         //　　　　出力結果【5】
         private static void Exercise05(List<string> cities) {
-
+            var count = cities.Count(n => n.Contains('n'));
+            Console.WriteLine(count);
 
         }
 
         //問題６　全都市数
         //　　　　出力結果【8】
         private static void Exercise06(List<string> cities) {
-
-
+           
         }
 
         //問題７　各都市名をアルファベット順（昇順）に出力
@@ -117,7 +118,7 @@ namespace Test02 {
         //          Paris
         //          Tokyo】
         private static void Exercise07(List<string> cities) {
-
+            
 
         }
 
@@ -132,8 +133,8 @@ namespace Test02 {
         //　　　　  Canberra : 8文字
         //　　　　  Hong Kong : 9文字】
         private static void Exercise08(List<string> cities) {
-
-
+            var count = cities.Count(s => s.Contains(""));
+            Console.WriteLine(count);
 
 
         }

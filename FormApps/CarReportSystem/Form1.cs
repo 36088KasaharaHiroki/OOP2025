@@ -2,11 +2,13 @@ using System.ComponentModel;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
     public partial class Form1 : Form {
         //カーレポート管理リスト
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
+        
 
         public Form1() {
             InitializeComponent();
@@ -150,6 +152,9 @@ namespace CarReportSystem {
 
             //交互に色を設定（データグリッドビュー）
             dgvRecod.AlternatingRowsDefaultCellStyle.BackColor = Color.LightCyan;
+
+            //設定ファイルを読み込み
+
         }
 
         private void tsmiExit_Click(object sender, EventArgs e) {
@@ -164,6 +169,8 @@ namespace CarReportSystem {
         private void 色設定ToolStripMenuItem_Click(object sender, EventArgs e) {
             if (cdColor.ShowDialog() == DialogResult.OK) {
                 BackColor = cdColor.Color;
+                //設定ファイルへ保存
+                //settings.MainFormBackColor = cdColor.Color.ToArgb();
             }
         }
 
@@ -187,7 +194,7 @@ namespace CarReportSystem {
                         foreach (var report in listCarReports) {
                             setCbAuthor(report.Author);
                             setCdCarName(report.CarName);
-                        }                       
+                        }
                     }
                 }
                 catch (Exception) {
@@ -207,7 +214,7 @@ namespace CarReportSystem {
                     using (FileStream fs = File.Open
                         (sfdReportFileSave.FileName, FileMode.Create)) {
                         bf.Serialize(fs, listCarReports);
-                        
+
                     }
                 }
                 catch (Exception ex) {
@@ -223,6 +230,12 @@ namespace CarReportSystem {
 
         private void 開くToolStripMenuItem_Click(object sender, EventArgs e) {
             reportOpenFile();
+        }
+
+        //フォームが閉じられたら呼ばれる
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+            //設定ファイルへ色情報を保存する処理
+
         }
     }
 }

@@ -23,6 +23,7 @@ namespace SalesCalculator {
             }
             return dict;
         }
+
         //売り上げデータの読み込み、Saleオブジェクトのリストを返す
         public static IEnumerable<Sale> ReadSales(String filePath) {
             //売り上げデータを入れるリストオブジェクト
