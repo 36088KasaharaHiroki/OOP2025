@@ -2,13 +2,16 @@ using System.ComponentModel;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
     public partial class Form1 : Form {
         //カーレポート管理リスト
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
-        
+
+        Settings settings =  Settings.getInstance();
 
         public Form1() {
             InitializeComponent();
@@ -151,9 +154,29 @@ namespace CarReportSystem {
             InputItemAllClear();
 
             //交互に色を設定（データグリッドビュー）
-            dgvRecod.AlternatingRowsDefaultCellStyle.BackColor = Color.LightCyan;
+            dgvRecod.DefaultCellStyle.BackColor = Color.LightGray;
+            dgvRecod.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
 
             //設定ファイルを読み込み
+            //P286以降を参考にする（ファイル名：setting.xml）
+            if (File.Exists("setting.xml")) {
+                try {
+                    using (var reader = XmlReader.Create("setting.xml")) {
+                        var serializer = new XmlSerializer(typeof(Settings));
+                        settings = serializer.Deserialize(reader) as Settings;
+                        BackColor = Color.FromArgb(settings.MainFormBackColor);
+                        //設定クラスのインスタンスにも現在の設定色を設定
+                        //settings.MainFormBackColor = BackColor.ToArgb();
+                        //settings = set;
+                    }
+                }
+                catch (Exception ex) {
+                    tsslbMessage.Text = "設定ファイル書き出しエラー";
+                    MessageBox.Show(ex.Message);
+                }
+            } else {
+                tsslbMessage.Text = "設定ファイルがありません";
+            }
 
         }
 
@@ -170,7 +193,7 @@ namespace CarReportSystem {
             if (cdColor.ShowDialog() == DialogResult.OK) {
                 BackColor = cdColor.Color;
                 //設定ファイルへ保存
-                //settings.MainFormBackColor = cdColor.Color.ToArgb();
+                settings.MainFormBackColor = cdColor.Color.ToArgb();
             }
         }
 
@@ -183,7 +206,7 @@ namespace CarReportSystem {
                     var bf = new BinaryFormatter();
 #pragma warning restore SYSLIB0011 // 型またはメンバーが旧型式です
                     using (FileStream fs = File.Open
-                        (ofdPicFileOpen.FileName, FileMode.Open, FileAccess.Read)) {
+                        (ofdReportFileOpen.FileName, FileMode.Open, FileAccess.Read)) {
 
                         listCarReports = (BindingList<CarReport>)bf.Deserialize(fs);
                         dgvRecod.DataSource = listCarReports;
@@ -212,7 +235,7 @@ namespace CarReportSystem {
                     var bf = new BinaryFormatter();
 #pragma warning restore SYSLIB0011
                     using (FileStream fs = File.Open
-                        (sfdReportFileSave.FileName, FileMode.Create)) {
+                            (sfdReportFileSave.FileName, FileMode.Create)) {
                         bf.Serialize(fs, listCarReports);
 
                     }
@@ -235,7 +258,18 @@ namespace CarReportSystem {
         //フォームが閉じられたら呼ばれる
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
             //設定ファイルへ色情報を保存する処理
+            //P284以降を参考にする（ファイル名：setting.xml)
+            try {
+                using (var writer = XmlWriter.Create("stting.xml")) {
+                    var serializer = new XmlSerializer(settings.GetType());
+                    serializer.Serialize(writer, settings);
+                }
 
-        }
+            }
+            catch (Exception ex) {
+                tsslbMessage.Text = "設定ファイル書き出しエラー";
+                MessageBox.Show(ex.Message);
+            }
+        }        
     }
 }
