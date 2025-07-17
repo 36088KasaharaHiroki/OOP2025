@@ -2,33 +2,32 @@
 
 namespace Test01 {
     public class ScoreCounter {
-        private readonly IEnumerable<Student> _score;
+        private IEnumerable<Student> _score;
 
         // コンストラクタ
         public ScoreCounter(string filePath) {
+
             _score = ReadScore(filePath);
         }
 
-        //メソッドの概要： 
-        private static IEnumerable<Student> ReadScore(String filePath) {
-            var scores = new List<Student>();
+        //メソッドの概要：学生データの読み込み、オブジェクトのリストを返す
+        private static IEnumerable<Student> ReadScore(string filePath) {
+            var sales = new List<Student>();
             var lines = File.ReadAllLines(filePath);
             foreach (var line in lines) {
                 string[] items = line.Split(',');
-                //Saleオブジェクトを生成
                 var score = new Student {
                     Name = items[0],
                     Subject = items[1],
                     Score = int.Parse(items[2])
                 };
-                scores.Add(score);
+                sales.Add(score);
             }
-            return scores;
+            return sales;
         }
 
-
-        //メソッドの概要： 
-        public IDictionary<String, int> GetPerStudentScore() {
+        //メソッドの概要：生徒別の点数を求める
+        public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
             foreach (Student scores in _score) {
                 if (dict.ContainsKey(scores.Name))
@@ -38,7 +37,5 @@ namespace Test01 {
             }
             return dict;
         }
-
-
     }
 }

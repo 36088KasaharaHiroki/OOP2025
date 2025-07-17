@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 
 namespace Test02 {
     internal class Program {
@@ -104,7 +105,8 @@ namespace Test02 {
         //問題６　全都市数
         //　　　　出力結果【8】
         private static void Exercise06(List<string> cities) {
-           
+            var count = cities.Count(s => s.Contains(""));
+            Console.WriteLine(count);
         }
 
         //問題７　各都市名をアルファベット順（昇順）に出力
@@ -118,7 +120,10 @@ namespace Test02 {
         //          Paris
         //          Tokyo】
         private static void Exercise07(List<string> cities) {
-            
+            var num = cities.OrderBy(s => s);
+            foreach (var n in num) {
+                Console.WriteLine($"{n} ");
+            }
 
         }
 
@@ -133,10 +138,13 @@ namespace Test02 {
         //　　　　  Canberra : 8文字
         //　　　　  Hong Kong : 9文字】
         private static void Exercise08(List<string> cities) {
-            var count = cities.Count(s => s.Contains(""));
-            Console.WriteLine(count);
-
-
+            var num = cities.Select(s => s);
+            var count = cities.Select(s => s.Length);
+            foreach (var n in num) {
+                foreach (var c in count) {
+                    Console.WriteLine($"{n}:{c}文字 ");
+                }
+            }
         }
 
         //問題９　各都市名と文字数を文字数の昇順で表示
@@ -150,7 +158,13 @@ namespace Test02 {
         //          New Delhi : 9文字
         //          Hong Kong : 9文字】
         private static void Exercise09(List<string> cities) {
-
+            var num = cities.OrderBy(s => s);
+            var count = cities.Select(s => s.Length);
+            foreach (var c in count) {
+                foreach (var n in num) {
+                    Console.WriteLine($"{n}:{c}文字 ");
+                }
+            }
 
 
 
@@ -161,8 +175,10 @@ namespace Test02 {
         //        【London
         //          Berlin】
         private static void Exercise10(List<string> cities) {
-
-
+            var num = cities.Where(s => s.Length == 6).ToArray();
+            foreach (var item in num) {
+                Console.WriteLine(item);
+            }
 
         }
     }

@@ -12,16 +12,17 @@ namespace Exercise01 {
         }
 
         private static void Exercise1(string text) {
-            var Dict = new Dictionary<char, int>();
+            var dict = new Dictionary<char, int>();
             foreach (var ch in text.ToUpper()) {
-                if ('A'<= ch && ch <= 'Z') {
-                    Dict[ch]++;
-                } else {
-                    Dict[ch] = 1;
+                if ('A' <= ch && ch <= 'Z') {
+                    if (dict.ContainsKey(ch))
+                        dict[ch]++;
+                    else
+                        dict[ch] = 1;
                 }
-                    
+
             }
-            foreach (var item in Dict.OrderBy(x => x.Key)) {
+            foreach (var item in dict.OrderBy(x => x.Key)) {
                 Console.WriteLine("{0}:{1}", item.Key, item.Value);
             }
 
