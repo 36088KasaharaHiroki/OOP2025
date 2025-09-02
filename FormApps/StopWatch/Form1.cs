@@ -41,5 +41,9 @@ namespace StopWatch {
         private void btRset_Click(object sender, EventArgs e) {
             sw.Reset();
         }
+
+        private void lbTimeDisp_Click(object sender, EventArgs e) {
+
+        }
     }
 }

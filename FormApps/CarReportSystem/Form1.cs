@@ -11,7 +11,7 @@ namespace CarReportSystem {
         //カーレポート管理リスト
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
 
-        Settings settings =  Settings.getInstance();
+        Settings settings = Settings.getInstance();
 
         public Form1() {
             InitializeComponent();
@@ -270,6 +270,6 @@ namespace CarReportSystem {
                 tsslbMessage.Text = "設定ファイル書き出しエラー";
                 MessageBox.Show(ex.Message);
             }
-        }        
+        }
     }
 }

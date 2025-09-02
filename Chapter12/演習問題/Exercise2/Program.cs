@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace Exercise2 {
+namespace Exercise02 {
     internal class Program {
         static void Main(string[] args) {
             var jsonString = File.ReadAllText("novelist.json");
@@ -14,22 +14,24 @@ namespace Exercise2 {
             }
         }
 
-    //    static Novelist? Deserialize(string jsonString) {
-    //        var options = new JsonDocumentOptions {
-    //            //PropertyNamePolicy = JsonNamingPolicy.CamelCase,
-
-    //        };
-    //    var noverist = JsonSerializer.Deserialize<Novelist>(JsonString, options)
-    //    return noverist;
-    //    }
-    //}
+        static Novelist? Deserialize(string jsonString) {
+            var options = new JsonSerializerOptions {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals |
+                                 JsonNumberHandling.AllowReadingFromString
+            };
+            var novelist = JsonSerializer.Deserialize<Novelist>(jsonString, options);
+            return novelist;
+        }
+    }
 
     public record Novelist {
         public int Id { get; init; }
         public string Name { get; init; } = string.Empty;
         [JsonPropertyName("birth")]
         public DateTime Birthday { get; init; }
-        public string[] Masterpieces { get; init; } = [];//空の配列を作成
+        public string[] Masterpieces { get; init; } = [];   //空の配列を作成
     }
 }
+
 

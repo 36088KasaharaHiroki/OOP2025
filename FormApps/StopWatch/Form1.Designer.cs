@@ -39,6 +39,7 @@
             this.lbTimeDisp.Name = "lbTimeDisp";
             this.lbTimeDisp.Size = new System.Drawing.Size(284, 66);
             this.lbTimeDisp.TabIndex = 0;
+            this.lbTimeDisp.Click += new System.EventHandler(this.lbTimeDisp_Click);
             // 
             // btStrt
             // 

@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Exercise03 {
     internal class Program {
@@ -14,18 +15,24 @@ namespace Exercise03 {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                WriteIndeted = true
+                WriteIndented = true
             };
             var text = File.ReadAllText(filePath);
-            var employee = JsonSerializer.Deserialize<Employee[]>(text.options);
-            return employee ?? [];
+            var employees = JsonSerializer.Deserialize<Employee[]>(text, options);
+            return employees ?? [];
+
         }
 
         static void ToXmlFile(Employee[] employees) {
-            using(var write = XmlWriter.Create("employees.xml")) {
+            using (var writer = XmlWriter.Create("employees.xml")) {
 
+                XmlRootAttribute xRoot = new XmlRootAttribute {
+                    ElementName = "Employees"
+                };
+
+                var serializer = new XmlSerializer(employees.GetType(), xRoot);
+                serializer.Serialize(writer, employees);
             }
-
         }
     }
 
@@ -35,6 +42,6 @@ namespace Exercise03 {
         public string Name { get; set; } = string.Empty;
 
         public DateTime HireDate { get; set; }
-    
     }
 }
+
