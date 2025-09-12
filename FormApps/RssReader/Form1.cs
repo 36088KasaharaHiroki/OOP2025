@@ -91,7 +91,7 @@ namespace RssReader {
             if (odd && !sel) {
                 e.Graphics.FillRectangle(bak, bnd);
             } else if (!odd && !sel) {
-ConsoleApp1                e.Graphics.FillRectangle(fore, bnd);
+                e.Graphics.FillRectangle(fore, bnd);
             }
 
             //•¶Žš‚ð•`‰æ
