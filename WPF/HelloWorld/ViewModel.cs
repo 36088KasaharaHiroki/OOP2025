@@ -6,27 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HelloWorld {
-    class ViewModel  : BindableBase{
+    class ViewModel : BindableBase {
 
         public ViewModel() {
             ChangeMessageCommand = new DelegateCommand<string>(
-                (par) => GreetingMessage = par);
+                (par) => GreetingMessage = par,
+                (par) => GreetingMessage != par)
+                .ObservesProperty(() => GreetingMessage);
         }
 
         private string _gretingMessage = "Hello World!";
         public string GreetingMessage {
             get => _gretingMessage;
-            set { 
-                if(SetProperty(ref _gretingMessage, value)) {
-                    CanChangeMessage = false;
-                }
-                 
-            }
-        }
-        private bool _canChengeMessage = true;
-        public bool CanChangeMessage {
-            get => _canChengeMessage;
-            private set => SetProperty(ref _canChengeMessage, value);
+            set => SetProperty(ref _gretingMessage, value);
         }
 
         public string NewMessage1 { get; } = "Bye-bye world!";
