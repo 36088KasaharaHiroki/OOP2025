@@ -33,7 +33,6 @@ namespace PrismObservesSample {
                 .ObservesProperty(()=> Input2);
         }
         
-
         //足し算の処理
         private void ExcuteSum() {
             Result = (int.Parse(Input1) + int.Parse(Input2)).ToString();
