@@ -7,14 +7,14 @@ using System.Windows.Input;
 using System.Windows.Media.TextFormatting;
 
 namespace SampleUnitConverter {
-    internal class MainWindowViewModel:ViewModel{
+    internal class MainWindowViewModel: BindableBase {
         //フィールド
         private double metricValue;
         private double imperialValue;
 
-        public ICommand ImperialUnitToMetric { get; set; }
+        public DelegateCommand ImperialUnitToMetric { get; set; }
 
-        public ICommand MetricToImperialUnit { get; set; }
+        public DelegateCommand MetricToImperialUnit { get; set; }
 
         //上のComboBoxで選択されている値
         public MetricUnit CurrentMetricUnit { get; set; }
@@ -24,18 +24,12 @@ namespace SampleUnitConverter {
         //プロパティ
         public double MetricValue {
             get => metricValue;
-            set {
-                this.metricValue = value;
-                this.OnPropertyChanged();
-            }
+            set => SetProperty(ref metricValue, value);
         }
-
+        
         public double ImperialValue {
             get => imperialValue; 
-            set {
-                this.imperialValue = value;
-                this.OnPropertyChanged();
-            } 
+            set => SetProperty(ref imperialValue, value);
         }
 
         public MainWindowViewModel() {
