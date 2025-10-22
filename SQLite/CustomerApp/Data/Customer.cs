@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sample.Data {
-    public class Person {
+namespace CustomerApp.Data {
+    class Customer {
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
         /// <summary>
