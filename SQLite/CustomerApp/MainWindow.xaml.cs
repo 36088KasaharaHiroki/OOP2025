@@ -1,4 +1,5 @@
 ﻿using CustomerApp.Data;
+using Microsoft.Win32;
 using SQLite;
 using System.Text;
 using System.Windows;
@@ -22,7 +23,14 @@ public partial class MainWindow : Window {
         InitializeComponent();
         ReadDatabase();
         PersonListView.ItemsSource = _persons;
+
+        //OpenFileDialog ofd = new OpenFileDialog();
+        //var ret = ofd.ShowDialog();
+        //if(ret ?? false) {
+        //}
     }
+
+    
 
     private void ReadDatabase() {
         using (var connection = new SQLiteConnection(App.databasePath)) {
@@ -36,6 +44,9 @@ public partial class MainWindow : Window {
     }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e) {
+        ReadDatabase();
+        PersonListView.ItemsSource = _persons;
+
         var person = new Customer() {
             Name = NameTextBox.Text,
             Phone = PhoneTexBox.Text,
