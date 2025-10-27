@@ -1,6 +1,7 @@
 ﻿using CustomerApp.Data;
 using Microsoft.Win32;
 using SQLite;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,19 +19,14 @@ namespace CustomerApp;
 /// Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow : Window {
+    OpenFileDialog ofd;
+
     private List<Customer> _persons = new List<Customer>();
     public MainWindow() {
         InitializeComponent();
         ReadDatabase();
         PersonListView.ItemsSource = _persons;
-
-        //OpenFileDialog ofd = new OpenFileDialog();
-        //var ret = ofd.ShowDialog();
-        //if(ret ?? false) {
-        //}
     }
-
-    
 
     private void ReadDatabase() {
         using (var connection = new SQLiteConnection(App.databasePath)) {
@@ -40,22 +36,28 @@ public partial class MainWindow : Window {
     }
 
     private void PictureButton_Click(object sender, RoutedEventArgs e) {
-        
+        OpenFileDialog ofd = new OpenFileDialog();
+        if (ofd.ShowDialog() ?? false) {
+            PictureImage.Source = new BitmapImage(new Uri(ofd.FileName, UriKind.Absolute));
+        }
     }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e) {
-        ReadDatabase();
-        PersonListView.ItemsSource = _persons;
+        //Customer customer = new Customer();        
+        //customer.Picture = ImageSourceToByteArray(PictureImage.Source);
 
         var person = new Customer() {
             Name = NameTextBox.Text,
             Phone = PhoneTexBox.Text,
+            Picture = ImageSourceToByteArray(PictureImage.Source),
         };
 
         using (var connection = new SQLiteConnection(App.databasePath)) {
             connection.CreateTable<Customer>();
             connection.Insert(person);
         }
+        ReadDatabase();
+        PersonListView.ItemsSource = _persons;
     }
 
     private void DeleteButton_Click(object sender, RoutedEventArgs e) {
@@ -67,7 +69,7 @@ public partial class MainWindow : Window {
 
         using (var connection = new SQLiteConnection(App.databasePath)) {
             connection.CreateTable<Customer>();
-            connection.Delete(item);    //データベースから選択されているレコードの削除
+            connection.Delete(item);
             ReadDatabase();
             PersonListView.ItemsSource = _persons;
         }
@@ -99,5 +101,45 @@ public partial class MainWindow : Window {
         if (selectedPerson is null) return;
         NameTextBox.Text = selectedPerson.Name;
         PhoneTexBox.Text = selectedPerson.Phone;
+        if (PersonListView.SelectedIndex != -1) {
+            if (_persons[PersonListView.SelectedIndex].Picture != null) {
+                PictureImage.Source = byteToBitmap(_persons[PersonListView.SelectedIndex].Picture);
+            } else {
+                PictureImage.Source = null;
+            }
+        }
+    }
+
+    public static byte[] ImageSourceToByteArray(ImageSource imageSource) {
+        if (imageSource == null) {
+            return null;
+        }
+
+        byte[] byteArray = null;
+        // MemoryStreamを作成
+        using (var stream = new MemoryStream()) {
+            // PngEncoderを作成
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)imageSource));
+            // MemoryStreamにエンコードを保存
+            encoder.Save(stream);
+            // MemoryStreamの内容をbyte配列として取得
+            byteArray = stream.ToArray();
+        }
+        return byteArray;
+    }
+
+    public static BitmapImage byteToBitmap(byte[] bytes) {
+        var result = new BitmapImage();
+
+        using (var stream = new MemoryStream(bytes)) {
+            result.BeginInit();
+            result.CacheOption = BitmapCacheOption.OnLoad;
+            result.CreateOptions = BitmapCreateOptions.None;
+            result.StreamSource = stream;
+            result.EndInit();
+            result.Freeze();    // 非UIスレッドから作成する場合、Freezeしないとメモリリークするため注意
+        }
+        return result;
     }
 }
