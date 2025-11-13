@@ -1,7 +1,8 @@
 {
   "profiles": {
     "LineCounter": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\infosys\\source\\repos\\OOP2025\\Chapter10\\Section01\\Program.cs\""
     }
   }
 }
