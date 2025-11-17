@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,5 +29,17 @@ namespace DistanceConverter {
             name.ToLower() == "yard" || name == UnitName;
         protected override double Ratio => 0.9144;
         public override string UnitName => "ヤード";
+    }
+    public class MilesConverter : ConverterBase {
+        public override bool IsMyUnit(string name) =>
+            name.ToLower() == "miles" || name == UnitName;
+        protected override double Ratio => 1609.34;
+        public override string UnitName => "マイル";
+    }
+    public class KilometerConverter : ConverterBase {
+        public override bool IsMyUnit(string name) =>
+            name.ToLower() == "Kilometer" || name == UnitName;
+        protected override double Ratio => 1000;
+        public override string UnitName => "キロメートル";
     }
 }
