@@ -14,9 +14,10 @@ namespace TextFileProcessorDI {
         }
         public void Run(string fileName) {
             _service.Initilize(fileName);
+
             var lines = File.ReadLines(fileName);
             foreach (var line in lines) {
-                _service.Equals(line);
+                _service.Execute(line);
             }
             _service.Terminate();
         }

@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TextFileProcessorDI {
-    public class LineCounterService : ITextFileService {
-        private int _count;
+    //P363 問題15.1
+    public class LineToHalfNumberService : ITextFileService {
         public void Initilize(string fname) {
-            _count = 0;
         }
 
         public void Execute(string line) {
-            _count++;
+            string result = new string(line.Select(c => 
+            ('０' <= c && c <= '９') ? (char)(c - '０' + '0') : c).ToArray());
+            Console.WriteLine(result);
         }
 
         public void Terminate() {
-            Console.WriteLine($"{_count}行");
+            
         }
     }
 }

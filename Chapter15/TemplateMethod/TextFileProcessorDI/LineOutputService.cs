@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TextFileProcessorDI {
-    public class LineCounterService : ITextFileService {
+    public class LineOutputService : ITextFileService {
         private int _count;
         public void Initilize(string fname) {
             _count = 0;
         }
 
         public void Execute(string line) {
-            _count++;
-        }
+            if (_count < 20) {
+                Console.WriteLine(line);
+                _count++;
+            }
+        }        
 
         public void Terminate() {
             Console.WriteLine($"{_count}行");
