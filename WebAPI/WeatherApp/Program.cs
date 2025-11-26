@@ -4,7 +4,7 @@ namespace WeatherApp {
     internal class Program {
         // 例：東京（緯度 35.0, 経度 139.0）の現在の気温などを取得
         private const string Url =
-            "https://api.open-meteo.com/v1/forecast?latitude=35.0&longitude=139.0&current=temperature_2m,wind_speed_10m";
+            "https://api.open-meteo.com/v1/forecast?latitude=35.0&longitude=139.0&current=temperature_2m,wind_speed_10m,relative_humidity_2m";
 
         static async Task Main(string[] args) {
             Console.OutputEncoding = System.Text.Encoding.UTF8;

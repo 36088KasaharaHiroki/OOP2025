@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Leaflet Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        const INITIAL_CENTER = [35.68, 139.76];
+        const INITIAL_ZOOM = 7.5;
+
+        var map = L.map('map').setView(INITIAL_CENTER, INITIAL_ZOOM);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        }).addTo(map);
+
+        var marker = null;
+
+        function placeMarker(lat, lng) {
+            if (marker) {
+                map.removeLayer(marker);
+                marker = null;
+            }
+            marker = L.marker([lat, lng]).addTo(map);
+        }
+
+        map.on('click', function (e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+            placeMarker(lat, lng);
+            if (window.chrome && window.chrome.webview) {
+                window.chrome.webview.postMessage({
+                    latitude: lat,
+                    longitude: lng
+                });
+            }
+        });
+
+        window.setMarker = function (lat, lng) {
+            placeMarker(lat, lng);
+        };
+
+        window.moveAndMarker = function (lat, lng) {
+            // 地図移動 + マーカー + 固定ズーム
+            map.setView([lat, lng], INITIAL_ZOOM);
+            placeMarker(lat, lng);
+        }
+    </script>
+</body>
+</html>

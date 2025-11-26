@@ -1,12 +1,48 @@
-﻿<Window x:Class="TenkiApp.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TenkiApp"
+        xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" x:Class="TenkiApp.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="TenkiApp" Height="800" Width="1100">
+    <Grid Margin="10">
+        <Border CornerRadius="15" BorderBrush="#FFB0C4DE" BorderThickness="2" Margin="0,0,270,0">
+            <Wpf:WebView2 x:Name="WebView" />
+        </Border>
 
+        <StackPanel HorizontalAlignment="Right" Width="250" Margin="0,0,10,0">
+            <Border Background="#FFE0F7FF" CornerRadius="12" Padding="10" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBlock Text="都道府県を検索／選択" FontSize="14" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="PrefectureComboBox"
+                    IsEditable="True"
+                    StaysOpenOnEdit="False"
+                    Height="28"
+                    IsTextSearchEnabled="True"
+                    IsTextSearchCaseSensitive="False"
+                    SelectionChanged="PrefectureComboBox_SelectionChanged"/>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#FFE0F7FF" CornerRadius="12" Padding="10" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBlock Text="地図クリック または 都道府県選択" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <TextBlock Text="緯度:" FontWeight="SemiBold"/>
+                    <TextBox x:Name="LatBox" IsReadOnly="True" Height="24" Margin="0,2,0,10" Background="#FFF0FAFF"/>
+                    <TextBlock Text="経度:" FontWeight="SemiBold"/>
+                    <TextBox x:Name="LonBox" IsReadOnly="True" Height="24" Margin="0,2,0,10" Background="#FFF0FAFF"/>
+                    <Border CornerRadius="10" Background="#FF87CEFA" Margin="0,10,0,0">
+                        <Button Content="天気を取得" Height="36" Background="Transparent" BorderThickness="0"
+                    Click="GetWeatherButton_Click"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#FFE0F7FF" CornerRadius="12" Padding="10">
+                <TextBlock x:Name="WeatherInfoText" TextWrapping="Wrap" FontSize="16"/>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>
