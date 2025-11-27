@@ -34,7 +34,7 @@
                 <Button Content="削除" x:Name="DeleteButton" Margin="5,5,10,5" Width="350" Height="25" Click="DeleteButton_Click"/>
             </StackPanel>
             <TextBox x:Name="SearchTextBox"  Margin="0,5,0,0" FontSize="20" TextChanged="SearchTextBox_TextChanged"/>
-            <ListView x:Name="PersonListView" Margin="0,5,0,0" Height="600" SelectionChanged="PersonListView_SelectionChanged">
+            <ListView x:Name="PersonListView" Margin="0,5,0,0" Height="450" SelectionChanged="PersonListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
